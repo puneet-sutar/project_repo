@@ -2,7 +2,7 @@
 <request>
 	<trans_id>1</trans_id>
 	<op_id>1</op_id>
-	<op_name>credit</op_name>
+	<op_name>transfer</op_name>
 	<input>
 		<id1>111232345</id1>
 		<id>221212122</id>

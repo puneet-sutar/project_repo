@@ -3,6 +3,8 @@
 <name>Debit</name>
 <type>operation</type>
 <process>
-<name input='Account:bal:bal - #amt:id = #id'>update</name>
+<name input='Account:bal:bal - #amt:id = #id1' type="atom">update</name>
 </process>
+<rules name="exist?" error="11111" input="Account:id = #id" on_input="false" trigger="before"/>
+<rules name="greaterthen?" error="bal<0" input="Account:bal:0:id = #id1" on_input="false" trigger="after"/>
 </Debit>

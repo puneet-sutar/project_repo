@@ -1,11 +1,10 @@
 <op>
 <id>c1</id>
-<name>credit</name>
+<name>transfer</name>
 <type>operation</type>
 <process>
 <name input='false' type="operation">credit</name>
-<name input='false' type="operation">debit2</name>
+<name input='false' type="operation">Debit</name>
 </process>
-<rules name="exist?" error="11111" input="false" on_input="false" trigger="before"/>
-<rules name="greaterthen?" error="amt<0" input="#amt : 0" on_input="true" trigger="before"/>
+<return value="Account:bal Customer:name"/>
 </op>

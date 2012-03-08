@@ -4,9 +4,8 @@
 <type>operation</type>
 <process>
 <name input='Account:bal:bal + #amt:id = #id' type="atom">update</name>
-<name input='false' type="operation">debit2</name>
 </process>
-<rules name="exist?" error="11111" input="false" on_input="false" trigger="before"/>
-<rules name="greaterthen?" error="amt<0" input="#amt : 0" on_input="true" trigger="before"/>
+<rules name="exist?" error="11111" input="Account:id = #id" on_input="false" trigger="before"/>
+<rules name="greaterthen?" error="amt<0" input="#amt:0" on_input="true" trigger="before"/>
 <return value="Account:bal Customer:name"/>
 </op>

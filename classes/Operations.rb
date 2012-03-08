@@ -26,23 +26,31 @@ class Operation
     @type="operation"
     @process=hash['process'][0]['name']
     @rules=[]
-    if(hash['rules']!=nil)
-    hash['rules'].each do |rule|
-      @rules.push(Rule.new(rule))
+    
+    if(hash.key?("rules")==true)
+      @rules=hash["rules"]
     end
-    end
+    
     @return=hash['return']
   end
   def execute(dbh)
+    @rules.each do |rule|
+       Rule.new(rule).execute(dbh) if rule['trigger']=="before"
+    end
     @process.each do |process|
       if (process['type']=="operation")
         Operation.new(process['content'].first).execute(dbh)
+        
       elsif(process['type']=="atom")
         Atom.new(process['content'].first).execute(process['input'],dbh) 
       else
         puts "invalid operation type : #{process['type']}"  
       end
     end
+    @rules.each do |rule|
+       Rule.new(rule).execute(dbh) if rule['trigger']=="after"
+    end
+    
   end
   
 end
