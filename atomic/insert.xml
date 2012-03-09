@@ -1,0 +1,11 @@
+<atom>
+		<id>a1</id>
+		<name type='inbuilt'>insert</name>
+		<param num='4'>
+			<name type='string'>objName</name>
+			<name type='array'>fields</name>
+		</param>
+		<process>	
+		</process>
+		<return value='false'/>	
+</atom>	

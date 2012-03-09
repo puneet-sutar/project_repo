@@ -26,7 +26,6 @@ class Operation
     @type="operation"
     @process=hash['process'][0]['name']
     @rules=[]
-    
     if(hash.key?("rules")==true)
       @rules=hash["rules"]
     end
@@ -35,12 +34,16 @@ class Operation
   end
   def execute(dbh)
     @rules.each do |rule|
-       Rule.new(rule).execute(dbh) if rule['trigger']=="before"
+       result=Rule.new(rule).execute(dbh) if rule['trigger']=="before"
+       if(result==false)
+         puts "rule broken "
+         dbh.rollback
+         return false
+       end
     end
     @process.each do |process|
       if (process['type']=="operation")
-        Operation.new(process['content'].first).execute(dbh)
-        
+        return false if Operation.new(process['content'].first).execute(dbh)==false
       elsif(process['type']=="atom")
         Atom.new(process['content'].first).execute(process['input'],dbh) 
       else
@@ -48,9 +51,30 @@ class Operation
       end
     end
     @rules.each do |rule|
-       Rule.new(rule).execute(dbh) if rule['trigger']=="after"
+       result=Rule.new(rule).execute(dbh) if rule['trigger']=="after"
+       if(result==false)
+         puts "rule broken "
+         dbh.rollback
+         return false
+       end
     end
-    
+    if $opname==self.name
+      arr=self.return[0]['value'].split(" ")
+            
+      arr.each do |i|
+        field=i.split(":").last
+        table=i.split(":").first
+        output={}
+        sth = dbh.prepare("select #{field} from #{table}")
+        sth.execute()
+        sth.fetch do |row|
+          puts row[0]
+        end
+      end      
+      
+      
+    end
+    return true  
   end
   
 end

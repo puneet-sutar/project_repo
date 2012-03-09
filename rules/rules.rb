@@ -1,5 +1,3 @@
-require "rubygems"
-require "dbi"
 module Rules
   def exist?(input,dbh)
       sth = dbh.prepare("select * from #{input[0]} where #{input[1]}")
@@ -10,7 +8,7 @@ module Rules
       return true
   end  
   def lessthen?(input,dbh)
-      sth = dbh.prepare("select * from #{input[2]} where #{input[3]} and #{input[0]} < #{input[1]}")
+      sth = dbh.prepare("select * from #{input[0]} where #{input[3]} and #{input[1]} < #{input[2]}")
       sth.execute()
       if sth.none? == false
          return true 
@@ -19,7 +17,7 @@ module Rules
       return false         
   end
   def greaterthen?(input,dbh)
-      sth = dbh.prepare("select * from #{input[2]} where #{input[3]} and #{input[0]} > #{input[1]}") 
+      sth = dbh.prepare("select * from #{input[0]} where #{input[3]} and #{input[1]} > #{input[2]}") 
       sth.execute()
       if sth.none? == false
           puts true
@@ -28,8 +26,16 @@ module Rules
       puts false
       return false
   end
+  def on_input_greaterthen?(input)
+      if input[0] > input[1]
+          puts true
+         return true 
+      end
+      puts false
+      return false
+  end
   def equal?(input,dbh)
-    sth = dbh.prepare("select * from #{input[2]} where #{input[3]} and #{input[0]} = #{input[1]}") 
+    sth = dbh.prepare("select * from #{input[0]} where #{input[3]} and #{input[1]} = #{input[2]}") 
     sth.execute()
     if sth.none? == false
         return true
@@ -38,7 +44,7 @@ module Rules
   end
  
   def not_equal?(input,dbh)
-    sth = dbh.prepare("select * from #{input[2]} where #{input[3]} and #{input[0]} != #{input[1]}") 
+    sth = dbh.prepare("select * from #{input[0]} where #{input[3]} and #{input[1]} < #{input[2]}") 
     sth.execute()
     if sth.none? == false
         return true 

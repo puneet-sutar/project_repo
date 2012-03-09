@@ -23,13 +23,17 @@ class LegacySystem
 begin
      # connect to the MySQL server
      dbh = DBI.connect("DBI:Mysql:#{$DATABASE}:#{$IP}",$MYSQL_USER, $PASSWORD)
-     @operation.execute(dbh)
+     dbh['AutoCommit'] = false
+     result=@operation.execute(dbh)
+     dbh.commit if result==true
 rescue DBI::DatabaseError => e
+     dbh.rollback 
      puts "An error occurred"
      puts "Error code:    #{e.err}"
      puts "Error message: #{e.errstr}"
 ensure
      # disconnect from server
+     dbh['AutoCommit'] = true
      dbh.disconnect if dbh
 end
     

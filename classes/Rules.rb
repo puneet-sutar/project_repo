@@ -1,6 +1,8 @@
 require "../modules/mod1.rb"
+require "../rules/rules.rb"
 class Rule
   include Validations
+  include Rules
   attr_reader :name
   attr_reader :error
   attr_reader :input
@@ -14,8 +16,16 @@ class Rule
     @trigger=rule['trigger']
   end
   def execute(dbh)
-    prepare(@input)
-    puts @input.join(":")
+    if self.on_input=='false'
+      prepare(@input)
+      puts @input.join(":")
+       send(@name,@input,dbh)  
+    elsif self.on_input=='true'
+      prepare_on_input(@input) 
+      puts @input.join(":")
+      send("on_input_"+@name,@input)
+    end
+    
     
   end
   def prepare(input)
@@ -57,5 +67,29 @@ class Rule
       index=index+1;
     end
     @input=str
-  end
+      end
 end
+def prepare_on_input(input)
+    str=input.split(":")
+    object={}
+    index=0
+    while index<str.length
+      rhs_split=str[index].split(" ")
+      i=0
+      while i<rhs_split.length
+        if rhs_split[i][0]==35  ##ascii value of #=35
+          temp=rhs_split[i].split("#")[1]
+          rhs_split[i]=$input[temp]
+        elsif is_i?(rhs_split[i])
+          puts ""       
+        end
+        i=i+1
+      end
+      str[index]=rhs_split.join(" ");
+      index=index+1;
+    end
+    @input=str
+   
+end
+
+
