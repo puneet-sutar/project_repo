@@ -1,9 +1,9 @@
 <atom>
 		<id>a1</id>
-		<name type='inbuilt'>insert</name>
+		<name type='inbuilt'>delete</name>
 		<param num='4'>
 			<name type='string'>objName</name>
-			<name type='field'>fields</name>
+			<name type='string'>condition</name>
 		</param>
 		<process>	
 		</process>

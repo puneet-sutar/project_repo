@@ -1,0 +1,10 @@
+<op>
+<id>c1</id>
+<name>add_branch</name>
+<type>operation</type>
+<process>
+<name input='Customer:#id:#name:#address:#branch' type="atom">insert</name>
+<name input='Account:#id:#amt:#branch' type="atom">insert</name>
+</process>
+<return value="Account:bal Customer:name"/>
+</op>

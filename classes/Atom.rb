@@ -27,7 +27,12 @@ class Atom
   def execute(input,dbh)
     prepare(input)
     puts @input
-    update(dbh)
+    case @name
+      when "update"
+        update(dbh)
+      when "insert"
+        insert(dbh) 
+    end
         #@input=prepare(input)
   end
   def update(dbh)
@@ -49,10 +54,23 @@ class Atom
     puts sth.execute()
   end
   def delete(dbh)
-    puts "delete"
+    values=[]
+    values=@input
+    value.delete_at(0)
+    values=values.map{|i| i="\'"+i+"\'"}
+    values=values.join(",")  
+    sth = dbh.prepare("insert into #{@input[0]}_updatable values ( #{values} )") #non conditonal update
+    puts sth.execute()
+    puts "---------------",@input.class
   end
   def insert(dbh)
-        puts "in insert"
+    values=[]
+    values=@input
+    value.delete_at(0)
+    values=values.join(",")  
+    sth = dbh.prepare("insert into #{@input[0]}_updatable values ( #{values} )") #non conditonal update
+    puts sth.execute()
+    puts "---------------",@input.class
   end  
   def prepare(input)
     str=input.split(":")

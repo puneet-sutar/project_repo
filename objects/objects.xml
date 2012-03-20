@@ -14,8 +14,8 @@
 </object>
 <object>
 <name value="Account"/>
-<attr f_key='Branch:b_name' type='string' content="b_name"/>
-<attr f_key='false' type='float' content="bal"/>
 <attr f_key='Customer:id' type='string' content="id"/>
+<attr f_key='false' type='float' content="bal"/>
+<attr f_key='Branch:b_name' type='string' content="b_name"/>
 </object>
 </obj.xml>

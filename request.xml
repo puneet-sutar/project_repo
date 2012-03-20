@@ -2,10 +2,12 @@
 <request>
 	<trans_id>1</trans_id>
 	<op_id>1</op_id>
-	<op_name>transfer</op_name>
+	<op_name>add_branch</op_name>
 	<input>
-		<id1>111232345</id1>
-		<id>221212122</id>
-		<amt>1000</amt>
+		<id>8888</id>
+		<amt>10000</amt>
+		<branch>mumbai</branch>
+		<address>hanumannagar</address>
+		<name>devanand</name>
 	</input>
 </request>
