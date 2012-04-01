@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		<CreditAddRq_Type xmlns="urn:ifxforum-org:XSD:1"><RqUID>0110200312000791</RqUID><MsgRqHdr><EMVRqData><TrnDt>2012-03-20</TrnDt></EMVRqData><ClientTerminalSeqId>11111</ClientTerminalSeqId><PSOTransactionCode>2892</PSOTransactionCode></MsgRqHdr><AsyncRqUID>0</AsyncRqUID><CreditInfo><CompositeCurAmt><CurAmt><Amt>100.00</Amt></CurAmt></CompositeCurAmt><DepAcctId><AcctId>1102864200</AcctId><AcctType>SDA</AcctType></DepAcctId></CreditInfo></CreditAddRq_Type>
+

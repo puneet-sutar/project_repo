@@ -6,5 +6,6 @@
 <name input='Customer:#id:#name:#address:#branch' type="atom">insert</name>
 <name input='Account:#id:#amt:#branch' type="atom">insert</name>
 </process>
-<return value="Account:bal Customer:name"/>
+<return value="Account:bal:id = #id"/>
+<return value="Customer:name:id = #id"/>	
 </op>

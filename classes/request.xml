@@ -1,9 +1,8 @@
 <request.xml>
 <trans_id></trans_id>
 <op_id>1</op_id>
-<op_name>Debit</op_name>
+<op_name>check</op_name>
 <input>
 <id>8888</id>
-<amt>100.90</amt>
 </input>
 </request.xml>

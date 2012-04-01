@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<request>
+	<trans_id>1</trans_id>
+	<op_id>1</op_id>
+	<op_name>add_branch</op_name>
+	<input>
+		<id>8888</id>
+		<amt>10000</amt>
+		<branch>mumbai</branch>
+		<address>hanumannagar</address>
+		<name>devanand</name>
+	</input>
+</request>

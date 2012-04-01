@@ -1,12 +1,9 @@
 <Debit>
 <id>c1</id>
-<name>Debit</name>
+<name>check</name>
 <type>operation</type>
-<process>
-<name input='Account:bal:bal - #amt:id = #id' type="atom">update</name>
-</process>
+<process></process>
 <rules name="exist?" error="11111" input="Account:id = #id" on_input="false" trigger="before"/>
-<rules name="greaterthen?" error="bal<0" input="Account:bal:0:id = #id" on_input="false" trigger="after"/>
 <return value="Account:bal:id = #id"/>
 <return value="Customer:name:id = #id"/>
 </Debit>

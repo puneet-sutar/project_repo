@@ -6,5 +6,6 @@
 <name input='false' type="operation">credit</name>
 <name input='false' type="operation">Debit</name>
 </process>
-<return value="Account:bal Customer:name"/>
+<return value="Account:bal:id = #id"/>
+<return value="Customer:name:id = #id"/>
 </op>

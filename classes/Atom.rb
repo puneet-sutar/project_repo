@@ -6,12 +6,15 @@ class Atom
   attr_reader :type
   attr_reader :input
   
-  def initialize
-    
-  end
+  
   def initialize(opname)
-     create(opname) 
+    if(opname=="return")
+      @name="return"
+    else
+     create(opname)
+    end 
   end
+  
   def create(opname)
     fin=File.open("../atomic/atom.info")
     atoms=fin.read.split(" ")
@@ -31,7 +34,11 @@ class Atom
       when "update"
         update(dbh)
       when "insert"
-        insert(dbh) 
+        insert(dbh)
+      when "return"
+        value=return1(dbh)
+        return {@input[1]=>value}
+         
     end
         #@input=prepare(input)
   end
@@ -44,14 +51,13 @@ class Atom
     end
     puts sth.execute()
   end
-  def select(dbh)
-    puts "update #{@input[0]}_updatable set #{@input[1]} = #{@input[2]} WHERE  #{@input[3]}"
-    if @input[3]==nil
-      sth = dbh.prepare("update #{@input[0]}_updatable set #{@input[1]} = #{@input[2]}") #non conditonal update
-    else
-      sth = dbh.prepare("update #{@input[0]}_updatable set #{@input[1]} = #{@input[2]} WHERE  #{@input[3]}") #conditional update    
-    end
+  def return1(dbh)
+    query="select #{@input[1]} from #{@input[0]} WHERE  #{@input[2]}"
+    sth = dbh.prepare(query) #non conditonal update
     puts sth.execute()
+    sth.fetch do |row|
+      return row[0]
+    end
   end
   def delete(dbh)
     values=[]
@@ -65,8 +71,8 @@ class Atom
   end
   def insert(dbh)
     values=[]
-    values=@input
-    value.delete_at(0)
+    values=@input[1..@input.length-1]
+    values=values.map{|i| i="\'"+i+"\'"}
     values=values.join(",")  
     sth = dbh.prepare("insert into #{@input[0]}_updatable values ( #{values} )") #non conditonal update
     puts sth.execute()

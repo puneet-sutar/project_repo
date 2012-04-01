@@ -41,6 +41,7 @@ class Operation
          return false
        end
     end
+    if(!@process.nil?) ##if starts
     @process.each do |process|
       if (process['type']=="operation")
         return false if Operation.new(process['content'].first).execute(dbh)==false
@@ -50,6 +51,7 @@ class Operation
         puts "invalid operation type : #{process['type']}"  
       end
     end
+    end   #if ends
     @rules.each do |rule|
        result=Rule.new(rule).execute(dbh) if rule['trigger']=="after"
        if(result==false)
@@ -59,21 +61,24 @@ class Operation
        end
     end
     if $opname==self.name
-      arr=self.return[0]['value'].split(" ")
-            
-      arr.each do |i|
-        field=i.split(":").last
-        table=i.split(":").first
-        output={}
-        sth = dbh.prepare("select #{field} from #{table}")
-        sth.execute()
-        sth.fetch do |row|
-          puts row[0]
+      output=[]
+      
+      response=File.open("response.xml","w")
+      response.puts "<response.xml>"
+      response.puts "<output>"
+      @return.each do |i|
+        input=i['value']
+        rs=Atom.new("return")
+        result=rs.execute(input,dbh)
+        result.each do |key,value|
+          response.puts "<#{key}>#{value}</#{key}>"
         end
-      end      
-      
-      
-    end
+      end
+      response.puts "</output>"
+      response.puts "</response.xml>"
+      response.close
+           
+    end      
     return true  
   end
   

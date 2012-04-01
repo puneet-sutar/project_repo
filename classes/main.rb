@@ -9,6 +9,7 @@ $MYSQL_USER="root"
 $PASSWORD="123"
 $DATABASE="project"
 $IP="localhost"
+$GLOBAL_CONDITION="id = #id"
 
 class LegacySystem
   def initialize
